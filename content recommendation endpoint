@@ -1,1 +1,11 @@
+// controllers/recommendationController.js
+const MatchingEngine = require('../AI/matchingEngine');
 
+exports.getRecommendations = async (req, res) => {
+  try {
+    const recommendations = await MatchingEngine.findMatches(req.user.id);
+    res.json(recommendations.slice(0, 10)); // Top 10 matches
+  } catch (error) {
+    res.status(500).json({ error: 'Recommendation failed' });
+  }
+};
